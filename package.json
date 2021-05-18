@@ -16,5 +16,8 @@
     "url": "https://github.com/magilo/takehome-backend/issues"
   },
   "homepage": "https://github.com/magilo/takehome-backend#readme",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
 }
