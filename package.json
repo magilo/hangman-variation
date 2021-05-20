@@ -4,8 +4,9 @@
   "description": "test new repo",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/magilo/takehome-backend.git"
@@ -16,8 +17,10 @@
     "url": "https://github.com/magilo/takehome-backend/issues"
   },
   "homepage": "https://github.com/magilo/takehome-backend#readme",
-  "type": "module",
   "dependencies": {
     "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
