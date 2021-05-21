@@ -8,6 +8,9 @@
     "start": "cd src && node app.js"
   },
   "type": "module",
+  "jest": {
+    "transform": {}
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/magilo/takehome-backend.git"
