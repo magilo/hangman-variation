@@ -57,14 +57,14 @@ const ufoGame = {
 
   getInputLetter: function getInputLetter() {
     //console.log(gameState)
-    let inputLetter = readlineSync.question("Please enter your guess: ")
-    //check if input letter is single char a-z, A-Z
     const regex = /^[a-zA-Z]+$/
-    // if (inputLetter.length === 1 && inputLetter.match(regex)){
-    //   inputLetter = inputLetter.toLowerCase()
-    // } else {
-    //   //throw error message
-    // }
+    let inputLetter = readlineSync.question("Please enter your guess: ", {
+      limit: [function (input) {
+        return input.length === 1 && input.match(regex)
+      }],
+      limitMessage: 'I cannot understand your input. Please guess a single letter.'
+    })
+
     inputLetter = inputLetter.toLowerCase()
     console.log('user input', inputLetter)
     return inputLetter
