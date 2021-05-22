@@ -46,7 +46,7 @@ describe('verify mock setup', () => {
 describe("guessRight function", () => {
   const cGuesses = new Set()
   const newLetter = "c"
-  const correctGuesses = cGuesses.add(newLetter)
+  const correctGuesses = cGuesses.add("C")
   const correctCount = 1
 
   const guessRightOutput = ufoGame.guessRight(newLetter)
@@ -63,7 +63,7 @@ describe("guessRight function", () => {
 describe("guessWrong function", () => {
   const iGuesses = new Set()
   const newLetter = "x"
-  const incorrectGuesses = iGuesses.add(newLetter)
+  const incorrectGuesses = iGuesses.add("X")
   const abduction = 1
 
   const guessWrongOutput = ufoGame.guessWrong(newLetter)

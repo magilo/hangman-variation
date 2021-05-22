@@ -7,7 +7,7 @@ export const gameState = {
   correctGuesses: new Set(),
   incorrectGuesses: new Set(),
   correctCount: 0,
-  placeholder: "",
+  placeholder: [],
   codeword: "",
   abduction: 0
 }
@@ -32,9 +32,8 @@ const ufoGame = {
   },
 
   formatWord: function formatWord(randomWord) {
-    //apple => "_ _ _ _ _"
-    //to access underscore is index*2
-    let placeholder = "_".repeat(randomWord.length).split("").join(" ")
+    //apple => ["_", "_", "_", "_", "_"]
+    let placeholder = "_".repeat(randomWord.length).split("")
     return placeholder
   },
 
@@ -56,7 +55,6 @@ const ufoGame = {
   },
 
   getInputLetter: function getInputLetter() {
-    //console.log(gameState)
     const regex = /^[a-zA-Z]+$/
     let inputLetter = readlineSync.question("Please enter your guess: ", {
       limit: [function (input) {
@@ -64,20 +62,29 @@ const ufoGame = {
       }],
       limitMessage: 'I cannot understand your input. Please guess a single letter.'
     })
-
+    console.log("\n")
     inputLetter = inputLetter.toLowerCase()
-    console.log('user input', inputLetter)
+    // console.log('user input', inputLetter)
     return inputLetter
   },
 
   guessRight: function guessRight(inputLetter) {
-    gameState.correctGuesses.add(inputLetter)
-    gameState.correctCount += 1
+    gameState.correctGuesses.add(inputLetter.toUpperCase())
+    gameState.correctCount += 1;
+    const letterInfo = gameState.letterCount[inputLetter];
+    //console.log('info', letterInfo)
+    letterInfo.forEach(function (value) {
+      //console.log('place', gameState.placeholder)
+      let placeholder = gameState.placeholder;
+      // gameState.placeholder[value] = inputLetter.toUpperCase()
+      placeholder[value] = inputLetter.toUpperCase();
+      //console.log('value', value)
+    });
     return [gameState.correctGuesses, gameState.correctCount]
   },
 
   guessWrong: function guessWrong(inputLetter) {
-    gameState.incorrectGuesses.add(inputLetter)
+    gameState.incorrectGuesses.add(inputLetter.toUpperCase())
     gameState.abduction += 1
     return [gameState.incorrectGuesses, gameState.abduction]
   },
@@ -93,12 +100,16 @@ const ufoGame = {
     gameState.placeholder = blanks
     gameState.codeword = randomWord
 
-    console.log('app gameState', gameState)
+    // console.log('setupGame', gameState)
+  },
+  displayGuesses: function displayGuesses(guessSet) {
+    const guessArray = Array.from(guessSet)
+    return guessArray.join(" ")
   }
 }
 
-let word = ufoGame.getRandomWord()
-console.log('word', word)
-console.log('placeholder', ufoGame.formatWord(word))
+//let word = ufoGame.getRandomWord()
+//console.log('word', word)
+//console.log('placeholder', ufoGame.formatWord(word))
 
 export default ufoGame
