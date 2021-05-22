@@ -1,107 +1,78 @@
-import { playUFO, letterCounter, guessRight, guessWrong, gameState } from '../src/app'
-import { jest } from '@jest/globals';
+import fs from 'fs';
 import readlineSync from 'readline-sync'
-//import { readFileSync } from 'fs';
-import * as fs from 'fs';
+import ufoGame from '../src/ufoGame'
+import { jest } from '@jest/globals';
 
-jest.mock('readline-sync')
-//jest.mock('fs')
-fs.readFileSync = jest.fn()
+// auto-mock fs & readline-sync
+jest.mock('fs');
+jest.mock('readline-sync', () => jest.fn());
+readlineSync.question = jest.fn(() => 'mock')
+
+//spys
+const readFileSyncSPY = jest.spyOn(fs, 'readFileSync').mockImplementation(() => "CODECADEMY");
+const getRandomWordSPY = jest.spyOn(ufoGame, 'getRandomWord').mockImplementation(() => "CODECADEMY");
+const getInputLetterSPY = jest.spyOn(ufoGame, 'getInputLetter').mockImplementation(() => "z");
 
 
+describe('verify mock setup', () => {
 
-console.log('gameState', gameState)
+  let readFile = fs.readFileSync()
+  let randomWord = ufoGame.getRandomWord()
+  let input = ufoGame.getInputLetter()
+  let readLine = readlineSync.question()
 
-describe("Guess right function", () => {
-  const mockExpected = "mock value"
-  jest.mock("../src/app", () => ({
-    playUFO: jest.fn(),
-    guessRight: jest.fn(() => mockExpected)
-  }))
+  test('readFileSync mock was called', () => {
+    expect(readFileSyncSPY).toHaveBeenCalled()
+    expect(readFile).toEqual("CODECADEMY")
+  });
+
+  test('getRandomWord mock was called', () => {
+    expect(getRandomWordSPY).toHaveBeenCalled()
+    expect(randomWord).toEqual("CODECADEMY")
+  })
+
+  test('input letter mock was called', () => {
+    expect(getInputLetterSPY).toHaveBeenCalled()
+    expect(input).toEqual("z")
+  })
+
+  test("readlinesync mock was called", () => {
+    expect(readlineSync.question).toHaveBeenCalled()
+    expect(readLine).toEqual("mock")
+  })
+
+});
+
+describe("guessRight function", () => {
+  const cGuesses = new Set()
+  const newLetter = "c"
+  const correctGuesses = cGuesses.add(newLetter)
+  const correctCount = 1
+
+  const guessRightOutput = ufoGame.guessRight(newLetter)
+
+  test("should add letter to correctGuesses set", () => {
+    expect(guessRightOutput[0]).toEqual(correctGuesses)
+  })
+
   test("should increase correctCount by 1", () => {
-    console.log('readfile', fs.readFileSync)
-    let codeword = fs.readFileSync.mockResolvedValue('codecademy')
-    //console.log('readLineSync', readlineSync)
-    let inputLetter = readlineSync.mockResolvedValue('z')
-    console.log('mocked', codeword, inputLetter)
-    const actual = guessRight(inputLetter)
-    expect(actual).toEqual(mockExpected)
-
+    expect(guessRightOutput[1]).toEqual(correctCount)
   })
 })
-// import guess from '../src/guess'
-// import { letterCounter } from '../src/app'
 
-// describe("Guess function", () => {
+describe("guessWrong function", () => {
+  const iGuesses = new Set()
+  const newLetter = "x"
+  const incorrectGuesses = iGuesses.add(newLetter)
+  const abduction = 1
 
-//   test("input should be a single letter", () => {
-//     const input = 'z'
-//     const output = true
+  const guessWrongOutput = ufoGame.guessWrong(newLetter)
 
-//     let wordData = letterCounter("CODECADEMY")
+  test("should add letter to incorrectGuesses set", () => {
+    expect(guessWrongOutput[0]).toEqual(incorrectGuesses)
+  })
 
-//     const testState = {
-//       letterCount: wordData[0],
-//       uniqueCount: wordData[1],
-//       correctGuesses: new Set(),
-//       incorrectGuesses: new Set(),
-//       correctCount: 0,
-//       placeholder: "_ _ _ _ _ _ _ _ _ _",
-//       codeword: "CODECADEMY",
-//       abduction: 0
-//     }
-
-//     expect(guess(input, testState)).toEqual(
-//       expect.stringMatching(/^[a-zA-Z]+$/)
-//     )
-//   })
-// })
-
-// import { jest } from '@jest/globals';
-// //import playUFO from '../src/app'
-// import { letterCounter, guess } from '../src/app'
-// //import guess from '../src/guess'
-
-
-
-
-// describe("Guess function", () => {
-//   //const mockGuess = jest.fn()
-//   //const codeword = "CODECADEMY"
-//   let wordData = letterCounter("CODECADEMY")
-//   const gameState = {
-//     letterCount: wordData[0],
-//     uniqueCount: wordData[1],
-//     correctGuesses: new Set(),
-//     incorrectGuesses: new Set(),
-//     correctCount: 0,
-//     placeholder: "_ _ _ _ _ _ _ _ _ _",
-//     codeword: "CODECADEMY",
-//     abduction: 0
-//   }
-
-
-
-//   test("incorrect guess should increase abduction counter", () => {
-//     const input = "z"
-//     //gameState.incorrectGuesses.add("z")
-//     gameState.abduction += 1
-//     const output = 1
-
-//     expect(gameState.abduction).toEqual(output)
-//   })
-// })
-
-// /*
-// test("input should be a single letter and object", () => {
-//     expect(mockGuess).toHaveBeenCalled()
-//     expect(mockGuess).toBeCalledWith(
-//       expect.stringMatching(/^[a-zA-Z]+$/),
-//       expect.any(Object)
-//     )
-//     expect(mockGuess).toBeCalledWith(
-//       expect.toHaveLength(1),
-//       expect.any(Object)
-//     )
-//   })
-// */
+  test("should increase abduction by 1", () => {
+    expect(guessWrongOutput[1]).toEqual(abduction)
+  })
+})
