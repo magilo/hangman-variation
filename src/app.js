@@ -62,11 +62,13 @@ const messages = {
 function guessRight(inputLetter) {
   gameState.correctGuesses.add(inputLetter)
   gameState.correctCount += 1
+  return [gameState.correctGuesses, gameState.correctCount]
 }
 
 function guessWrong(inputLetter) {
-  gameState.abduction += 1
   gameState.incorrectGuesses.add(inputLetter)
+  gameState.abduction += 1
+  return [gameState.incorrectGuesses, gameState.abduction]
 }
 
 function playUFO() {
@@ -169,4 +171,4 @@ playUFO()
 // console.log(userName + "!")
 //console.log(ufo[0])
 
-export { playUFO, letterCounter, guessRight, guessWrong }
+export { playUFO, letterCounter, guessRight, guessWrong, gameState }

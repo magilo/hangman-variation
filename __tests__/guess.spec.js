@@ -1,15 +1,34 @@
-describe("Guess right function", () =>{
+import { playUFO, letterCounter, guessRight, guessWrong, gameState } from '../src/app'
+import { jest } from '@jest/globals';
+import readlineSync from 'readline-sync'
+//import { readFileSync } from 'fs';
+import * as fs from 'fs';
 
-  test("should add input letter to correct guesses set"){
-    const gameState = {
-      correctGuesses: new Set(),
-      correctCount: 0,
-    }
-    expect(guessRight('z')).to
+jest.mock('readline-sync')
+//jest.mock('fs')
+fs.readFileSync = jest.fn()
 
-  }
+
+
+console.log('gameState', gameState)
+
+describe("Guess right function", () => {
+  const mockExpected = "mock value"
+  jest.mock("../src/app", () => ({
+    playUFO: jest.fn(),
+    guessRight: jest.fn(() => mockExpected)
+  }))
+  test("should increase correctCount by 1", () => {
+    console.log('readfile', fs.readFileSync)
+    let codeword = fs.readFileSync.mockResolvedValue('codecademy')
+    //console.log('readLineSync', readlineSync)
+    let inputLetter = readlineSync.mockResolvedValue('z')
+    console.log('mocked', codeword, inputLetter)
+    const actual = guessRight(inputLetter)
+    expect(actual).toEqual(mockExpected)
+
+  })
 })
-
 // import guess from '../src/guess'
 // import { letterCounter } from '../src/app'
 
