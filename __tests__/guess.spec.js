@@ -1,6 +1,6 @@
 import fs from 'fs';
 import readlineSync from 'readline-sync'
-import ufoGame from '../src/ufoGame'
+import ufoGame, { gameState } from '../src/ufoGame'
 import { jest } from '@jest/globals';
 
 // auto-mock fs & readline-sync
@@ -45,10 +45,15 @@ describe('verify mock setup', () => {
 
 describe("guessRight function", () => {
   const cGuesses = new Set()
-  const newLetter = "c"
+  const newLetter = "C"
   const correctGuesses = cGuesses.add("C")
   const correctCount = 1
 
+
+  //let letterCount = ufoGame.letterCounter("codecademy")
+  gameState.letterCount = ufoGame.letterCounter("CODECADEMY")[0]
+  //console.log("inside test", gameState.letterCount)
+  //console.log("gamestate", gameState)
   const guessRightOutput = ufoGame.guessRight(newLetter)
 
   test("should add letter to correctGuesses set", () => {
@@ -62,7 +67,7 @@ describe("guessRight function", () => {
 
 describe("guessWrong function", () => {
   const iGuesses = new Set()
-  const newLetter = "x"
+  const newLetter = "X"
   const incorrectGuesses = iGuesses.add("X")
   const abduction = 1
 
