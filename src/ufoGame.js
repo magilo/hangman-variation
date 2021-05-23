@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import readlineSync from 'readline-sync'
 import messages from './messages.js'
-import resetState from './resetState.js'
+// import resetState from './resetState.js'
 import { ufo } from './ufo.js'
 
 export const gameState = {
@@ -15,17 +15,6 @@ export const gameState = {
   abduction: 0
 }
 
-// export const gameState = Object.create(resetState);
-
-// export const messages = {
-//   correct: "Correct! You're closer to cracking the codeword.",
-//   incorrect: "Incorrect! The tractor beam pulls the person in further.",
-//   win: "Correct! You saved the person and earned a medal of honor!",
-//   lose: "Sorry, the person has been abducted.",
-//   invalid: "I cannot understand your input. Please guess a single letter.",
-//   once: "You can only guess that letter once, please try again.",
-//   wordIs: "The codeword is: "
-// }
 
 const ufoGame = {
   getRandomWord: function getRandomWord() {
@@ -69,7 +58,6 @@ const ufoGame = {
     })
     console.log("\n")
     inputLetter = inputLetter.toUpperCase()
-    // console.log('user input', inputLetter)
     return inputLetter
   },
 
@@ -93,8 +81,6 @@ const ufoGame = {
   },
 
   setupGame: function setupGame() {
-    //Object.assign(gameState, resetState);
-    // const gameState = Object.create(resetState)
     ufoGame.clearState()
 
     let randomWord = ufoGame.getRandomWord()
@@ -114,6 +100,7 @@ const ufoGame = {
     const guessArray = Array.from(guessSet)
     return guessArray.join(" ")
   },
+
   playerStatus: function playerStatus() {
     console.log(ufo[gameState.abduction])
     console.log("Incorrect Guesses:")
@@ -126,12 +113,9 @@ const ufoGame = {
     console.log("Codeword:")
     console.log(ufoGame.displayGuesses(gameState.placeholder), "\n")
   },
-  // gameState: function gameState() {
-  //   return ufoGame.setupGame()
-  // },
 
   clearState: function clearState() {
-
+    //refactor later to be object instance
     gameState.letterCount = {}
     gameState.uniqueCount = 0
     gameState.correctGuesses = new Set()
@@ -140,12 +124,8 @@ const ufoGame = {
     gameState.placeholder = []
     gameState.codeword = ""
     gameState.abduction = 0
-
   }
 }
 
-//let word = ufoGame.getRandomWord()
-//console.log('word', word)
-//console.log('placeholder', ufoGame.formatWord(word))
 
 export default ufoGame
