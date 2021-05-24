@@ -95,8 +95,8 @@ const ufoGame = {
     gameState.placeholder = blanks
     gameState.codeword = randomWord
     return gameState
-
   },
+
   displayGuesses: function displayGuesses(guessSet) {
     const guessArray = Array.from(guessSet)
     return guessArray.join(" ")
