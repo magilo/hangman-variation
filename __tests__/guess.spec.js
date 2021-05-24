@@ -50,10 +50,7 @@ describe("guessRight function", () => {
   const correctCount = 1
 
 
-  //let letterCount = ufoGame.letterCounter("codecademy")
   gameState.letterCount = ufoGame.letterCounter("CODECADEMY")[0]
-  //console.log("inside test", gameState.letterCount)
-  //console.log("gamestate", gameState)
   const guessRightOutput = ufoGame.guessRight(newLetter)
 
   test("should add letter to correctGuesses set", () => {
