@@ -1,15 +1,26 @@
-Instructions on how to run UFO: The Game
+## Instructions on how to run UFO: The Game
 
-linux terminal
-have node.js installed
+- save and unzip game file into own folder
+- open a linux terminal
+- make sure Node.js >=v13.x is installed (I am using v14.17.0)
 
-unzip file
-navigate to the main directory (name)
 
-node file.js (to execute the file)
-.exit (exit node environment)
+on the command line:
 
-Node Ver 14+
-will not run on versions lower than 13 due to
-dependency on ECMAScript modules
-https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules
+```bash
+# navigate to game file directory
+$ cd takehome-backend-main
+
+# install dependencies
+$ npm install
+
+# run the app
+$ npm start
+
+# run the test suite
+$ npm test
+```
+
+See README.md for notes/bugs
+
+

@@ -35,7 +35,7 @@ function playGame() {
       matchData.filterMatches(matchData.matches, inputLetter)
       if (gameState.correctCount === gameState.uniqueCount) {
         console.log(messages.win)
-        console.log(messages.wordIs + gameState.codeword.toUpperCase())
+        console.log(messages.wordIs + gameState.codeword)
         return "done"
       } else {
         console.log(messages.correct)
