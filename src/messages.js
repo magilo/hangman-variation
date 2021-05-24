@@ -5,7 +5,8 @@ const messages = {
   lose: "Sorry, the person has been abducted.",
   invalid: "I cannot understand your input. Please guess a single letter.",
   once: "You can only guess that letter once, please try again.",
-  wordIs: "The codeword is: "
+  wordIs: "The codeword is: ",
+  matches: "Number of dictionary matches: "
 }
 
 export default messages

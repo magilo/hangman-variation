@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import readlineSync from 'readline-sync'
 import messages from './messages.js'
-// import resetState from './resetState.js'
 import { ufo } from './ufo.js'
+// import matchData from './match.js'
 
 export const gameState = {
   letterCount: {},
@@ -20,9 +20,11 @@ const ufoGame = {
   getRandomWord: function getRandomWord() {
     const data = fs.readFileSync(new URL('./nouns.txt', import.meta.url), { encoding: 'utf8', flag: 'r' })
     const lines = data.split("\n")
+    //matchData.allWords = lines
     let random = Math.floor(Math.random() * lines.length)
-    let randomWord = lines[random]
-    return randomWord.toUpperCase()
+    let randomWord = lines[random].toUpperCase()
+    //matchData.findMatches(randomWord)
+    return randomWord
   },
 
   formatWord: function formatWord(randomWord) {
@@ -92,7 +94,6 @@ const ufoGame = {
     gameState.uniqueCount = wordData[1]
     gameState.placeholder = blanks
     gameState.codeword = randomWord
-    //console.log('setupGame new', gameState)
     return gameState
 
   },
@@ -103,6 +104,7 @@ const ufoGame = {
 
   playerStatus: function playerStatus() {
     console.log(ufo[gameState.abduction])
+
     console.log("Incorrect Guesses:")
     if (gameState.incorrectGuesses.size > 0) {
       console.log(ufoGame.displayGuesses(gameState.incorrectGuesses), "\n")
@@ -112,6 +114,7 @@ const ufoGame = {
 
     console.log("Codeword:")
     console.log(ufoGame.displayGuesses(gameState.placeholder), "\n")
+    //console.log(messages.matches, matchData.matches.size, "\n")
   },
 
   clearState: function clearState() {

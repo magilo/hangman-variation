@@ -3,6 +3,7 @@ import ufoGame, { gameState } from './ufoGame.js'
 // import ufoGame from './ufoGame.js'
 import messages from './messages.js'
 import readlineSync from 'readline-sync'
+// import matchData from './match.js'
 
 
 function playGame() {
@@ -29,10 +30,11 @@ function playGame() {
       } else {
         console.log(messages.incorrect)
       }
+
     } else if (!(gameState.correctGuesses.has(inputLetter))) {
       //if is a letter in codeword
       ufoGame.guessRight(inputLetter)
-
+      //matchData.filterMatches(matchData.matches, inputLetter)
       if (gameState.correctCount === gameState.uniqueCount) {
         console.log(messages.win)
         console.log(messages.wordIs + gameState.codeword.toUpperCase())
@@ -41,6 +43,7 @@ function playGame() {
         console.log(messages.correct)
       }
     }
+
   }
 }
 
