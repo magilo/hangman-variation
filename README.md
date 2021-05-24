@@ -28,6 +28,7 @@ Guess one letter at a time of a codeword represented by blank placeholders for e
 - program must run on Node.js >=v13.x, and Jest >=26.1.0 due to dependency on ECMAScript modules
 https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules
 - issue with Jest when matchData module is saved in separate file
+- github repo https://github.com/magilo/takehome-backend
 
 
 ## Credits
@@ -35,4 +36,7 @@ https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules
 - [Node.js](https://nodejs.org/) v14.17.0
 - [readlineSync](https://github.com/anseki/readline-sync) v1.4.10
 - [Jest](https://jestjs.io/) v26.6.3
+
+
+
 
