@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import readlineSync from 'readline-sync'
 import messages from './messages.js'
 import { ufo } from './ufo.js'
-// import matchData from './match.js'
+
 
 export const gameState = {
   letterCount: {},
@@ -20,10 +20,10 @@ const ufoGame = {
   getRandomWord: function getRandomWord() {
     const data = fs.readFileSync(new URL('./nouns.txt', import.meta.url), { encoding: 'utf8', flag: 'r' })
     const lines = data.split("\n")
-    //matchData.allWords = lines
+    matchData.allWords = lines
     let random = Math.floor(Math.random() * lines.length)
     let randomWord = lines[random].toUpperCase()
-    //matchData.findMatches(randomWord)
+    matchData.findMatches(randomWord)
     return randomWord
   },
 
@@ -114,7 +114,7 @@ const ufoGame = {
 
     console.log("Codeword:")
     console.log(ufoGame.displayGuesses(gameState.placeholder), "\n")
-    //console.log(messages.matches, matchData.matches.size, "\n")
+    console.log(messages.matches, matchData.matches.size, "\n")
   },
 
   clearState: function clearState() {
@@ -127,6 +127,49 @@ const ufoGame = {
     gameState.placeholder = []
     gameState.codeword = ""
     gameState.abduction = 0
+  }
+}
+
+/*****
+ issue with jest & ES6 modules import/export when matchData module is saved in a separate file
+ RangeError: Maximum call stack size exceeded
+ *****/
+export const matchData = {
+  allWords: [],
+  matches: new Set(),
+
+  findMatches: function findMatches(word) {
+    //find words of same length in dictionary
+    //run when codeword is first selected
+    let matchLen = new Set()
+    matchData.allWords.forEach(function (value) {
+      if (value.length === word.length) {
+        matchLen.add(value.toUpperCase())
+      }
+    })
+    matchData.matches = matchLen
+  },
+
+  filterMatches: function filterMatches(wordSet, letter) {
+    //for every new correct guess, filter the words with matching letter at same idx
+    let idxSet = gameState.letterCount[letter]
+    let filtered = new Set()
+    for (let word of wordSet) {
+      let idxMatch = true
+      for (let idx of idxSet) {
+        if (!(word[idx] === letter)) idxMatch = false
+        break
+      }
+      if (idxMatch === true) {
+        filtered.add(word)
+      }
+    }
+    matchData.matches = filtered
+  },
+
+  clearMatches: function clearMatches() {
+    matchData.allWords = []
+    matchData.matches = new Set()
   }
 }
 
